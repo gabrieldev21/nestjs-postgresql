@@ -5,7 +5,7 @@ import { UserEntity } from './user.entity';
 export class UserRepository {
   private users: UserEntity[] = [];
   private searchById(id: string) {
-    const possibleUsers = this.users.find((user) => user.id === id);
+    const possibleUsers = this.users.find(user => user.id === id);
 
     if (!possibleUsers) {
       throw new Error(`User ${id} does not exist`);
@@ -23,7 +23,7 @@ export class UserRepository {
   }
 
   async existWithEmail(email: string) {
-    const possibleEmail = this.users.find((user) => user.email === email);
+    const possibleEmail = this.users.find(user => user.email === email);
 
     return possibleEmail !== undefined;
   }
@@ -44,7 +44,7 @@ export class UserRepository {
 
   async remove(id: string) {
     const user = this.searchById(id);
-    this.users = this.users.filter((user) => user.id !== id);
+    this.users = this.users.filter(user => user.id !== id);
 
     return user;
   }

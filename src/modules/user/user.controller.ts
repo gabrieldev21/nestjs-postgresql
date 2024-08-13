@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 import { UserRepository } from './user.repository';
 import { SaveUserDto } from './dto/saveUser.dto';
@@ -37,9 +29,7 @@ export class UserController {
   @Get()
   async getUsers() {
     const saveUsers = await this.userRepository.listUser();
-    const listUsers = saveUsers.map(
-      (user) => new ListUserDto(user.id, user.name),
-    );
+    const listUsers = saveUsers.map(user => new ListUserDto(user.id, user.name));
 
     return listUsers;
   }
