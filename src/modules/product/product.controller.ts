@@ -10,7 +10,7 @@ import {
 import { randomUUID } from 'crypto';
 
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/product-feature.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { UpdateProductDto } from './dto/update-product.dto';
 

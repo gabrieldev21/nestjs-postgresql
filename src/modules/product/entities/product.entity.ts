@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
+
 import { ProductImageEntity } from './product-image.entity';
 import { ProductFeatureEntity } from './product-feature.entity';
 

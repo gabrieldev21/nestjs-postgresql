@@ -10,7 +10,8 @@ import {
   Min,
   ValidateNested,
 } from 'class-validator';
-import { ProductFeatureDto, ProductImageDto } from './product-feature.dto';
+
+import { ProductFeatureDto, ProductImageDto } from './create-product.dto';
 
 export class UpdateProductDto {
   @IsUUID(undefined, { message: 'Invalid user ID' })
