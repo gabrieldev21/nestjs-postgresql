@@ -1,0 +1,52 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+import { ProductEntity } from './entities/product.entity';
+import { ListProductDto } from './dto/list-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+
+@Injectable()
+export class ProductService {
+  constructor(
+    @InjectRepository(ProductEntity)
+    private readonly productRepository: Repository<ProductEntity>
+  ) {}
+
+  async createProduct(productEntity: ProductEntity) {
+    await this.productRepository.save(productEntity);
+  }
+
+  async listProducts() {
+    const savedProducts = await this.productRepository.find({
+      relations: {
+        images: true,
+        features: true,
+      },
+    });
+
+    const productList = savedProducts.map(
+      product => new ListProductDto(product.id, product.name, product.features, product.images)
+    );
+    return productList;
+  }
+
+  async updateProduct(id: string, newDetails: UpdateProductDto) {
+    const existingProduct = await this.productRepository.findOneBy({ id });
+
+    if (!existingProduct) {
+      throw new Error('Product not found');
+    }
+
+    Object.assign(existingProduct, newDetails);
+    await this.productRepository.save(existingProduct);
+  }
+
+  async deleteProduct(id: string) {
+    const deleteResult = await this.productRepository.delete(id);
+
+    if (!deleteResult.affected) {
+      throw new Error('Product not found');
+    }
+  }
+}
