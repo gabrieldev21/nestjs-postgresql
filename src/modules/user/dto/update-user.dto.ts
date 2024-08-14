@@ -2,7 +2,7 @@ import { IsNotEmpty, IsEmail, MinLength, IsOptional } from 'class-validator';
 
 import { IsEmailUnique } from 'src/utils/validator/isEmailUnique.validator';
 
-export class UpdateUser {
+export class UpdateUserDto {
   @IsNotEmpty()
   @IsOptional()
   name: string;
