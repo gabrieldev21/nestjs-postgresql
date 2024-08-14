@@ -33,14 +33,15 @@ export class ProductEntity {
   @Column({ name: 'category', length: 100, nullable: false })
   category: string;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: string;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: string;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: string;
+  @OneToMany(
+    () => ProductFeatureEntity,
+    productFeatureEntity => productFeatureEntity.product,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  features: ProductFeatureEntity[];
 
   @OneToMany(
     () => ProductImageEntity,
@@ -52,13 +53,12 @@ export class ProductEntity {
   )
   images: ProductImageEntity[];
 
-  @OneToMany(
-    () => ProductFeatureEntity,
-    productFeatureEntity => productFeatureEntity.product,
-    {
-      cascade: true,
-      eager: true,
-    },
-  )
-  features: ProductFeatureEntity[];
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: string;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: string;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: string;
 }
