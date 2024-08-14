@@ -7,7 +7,7 @@ export class SaveUserDto {
   name: string;
 
   @IsEmail()
-  @IsEmailUnique({ message: 'Já existe usuário com este email' })
+  @IsEmailUnique({ message: 'Este email já está em uso.' })
   email: string;
 
   @MinLength(6)

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UserController } from './user.controller';
-import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 import { UserEntity } from './entities/user.entity';
 import { IsEmailUniqueValidator } from 'src/utils/validator/isEmailUnique.validator';
@@ -10,6 +9,6 @@ import { IsEmailUniqueValidator } from 'src/utils/validator/isEmailUnique.valida
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
-  providers: [UserService, UserRepository, IsEmailUniqueValidator],
+  providers: [UserService, IsEmailUniqueValidator],
 })
 export class UserModule {}

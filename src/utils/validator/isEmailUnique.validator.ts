@@ -6,24 +6,27 @@ import {
   registerDecorator,
 } from 'class-validator';
 
-import { UserRepository } from 'src/modules/user/user.repository';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class IsEmailUniqueValidator implements ValidatorConstraintInterface {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private userService: UserService) {}
 
-  async validate(value: any): Promise<boolean> {
-    const existUserWithEmail = await this.userRepository.existWithEmail(value);
-    return !existUserWithEmail;
+  async validate(email: string): Promise<boolean> {
+    return this.userService.isEmailUnique(email);
+  }
+
+  defaultMessage(): string {
+    return 'Já existe um usuário com este email';
   }
 }
 
-export const IsEmailUnique = (validationOptions: ValidationOptions) => {
-  return (object: object, property: string) => {
+export const IsEmailUnique = (validationOptions?: ValidationOptions) => {
+  return (object: object, propertyName: string) => {
     registerDecorator({
       target: object.constructor,
-      propertyName: property,
+      propertyName,
       options: validationOptions,
       constraints: [],
       validator: IsEmailUniqueValidator,

@@ -37,4 +37,9 @@ export class UserService {
   async deleteUser(id: string) {
     await this.userRepository.delete(id);
   }
+
+  async isEmailUnique(email: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    return !user;
+  }
 }
