@@ -10,6 +10,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: ['.env.local', '.env.production'],
     }),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
