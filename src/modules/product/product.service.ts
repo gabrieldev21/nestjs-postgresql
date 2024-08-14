@@ -10,7 +10,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
-    private readonly productRepository: Repository<ProductEntity>
+    private readonly productRepository: Repository<ProductEntity>,
   ) {}
 
   async createProduct(productEntity: ProductEntity) {
@@ -26,7 +26,13 @@ export class ProductService {
     });
 
     const productList = savedProducts.map(
-      product => new ListProductDto(product.id, product.name, product.features, product.images)
+      product =>
+        new ListProductDto(
+          product.id,
+          product.name,
+          product.features,
+          product.images,
+        ),
     );
     return productList;
   }

@@ -11,7 +11,7 @@ async function bootstrap() {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
-    })
+    }),
   );
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });

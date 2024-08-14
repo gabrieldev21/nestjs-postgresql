@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
 
 import { ProductService } from './product.service';
@@ -35,7 +43,10 @@ export class ProductController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() productData: UpdateProductDto) {
-    const updatedProduct = await this.productService.updateProduct(id, productData);
+    const updatedProduct = await this.productService.updateProduct(
+      id,
+      productData,
+    );
 
     return {
       message: 'Product successfully updated',

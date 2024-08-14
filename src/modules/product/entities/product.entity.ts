@@ -42,15 +42,23 @@ export class ProductEntity {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: string;
 
-  @OneToMany(() => ProductImageEntity, productImageEntity => productImageEntity.product, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(
+    () => ProductImageEntity,
+    productImageEntity => productImageEntity.product,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
   images: ProductImageEntity[];
 
-  @OneToMany(() => ProductFeatureEntity, productFeatureEntity => productFeatureEntity.product, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(
+    () => ProductFeatureEntity,
+    productFeatureEntity => productFeatureEntity.product,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
   features: ProductFeatureEntity[];
 }

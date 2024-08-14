@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 
 import { UserRepository } from './user.repository';
@@ -6,10 +14,14 @@ import { UserEntity } from './entities/user.entity';
 import { SaveUserDto } from './dto/save-user.dto';
 import { ListUserDto } from './dto/list-user.dto';
 import { UpdateUser } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private userService: UserService,
+  ) {}
 
   @Post()
   async createUser(@Body() userData: SaveUserDto) {
@@ -29,7 +41,9 @@ export class UserController {
   @Get()
   async getUsers() {
     const saveUsers = await this.userRepository.listUser();
-    const listUsers = saveUsers.map(user => new ListUserDto(user.id, user.name));
+    const listUsers = saveUsers.map(
+      user => new ListUserDto(user.id, user.name),
+    );
 
     return listUsers;
   }
