@@ -18,6 +18,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.0.0
   class-transformer: ^0.5.1
   class-validator: ^0.14.1
+  dotenv: 16.0.3
   eslint: ^8.0.1
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
@@ -34,7 +35,6 @@ specifiers:
   tsconfig-paths: 4.2.0
   typeorm: ^0.3.20
   typescript: ^5.0.0
-  uuid: ^10.0.0
   webpack: ^5.0.0
 
 dependencies:
@@ -45,11 +45,11 @@ dependencies:
   '@nestjs/typeorm': 10.0.2_qy6edqshhpo2o7rrwoglfhxqge
   class-transformer: 0.5.1
   class-validator: 0.14.1
+  dotenv: 16.0.3
   pg: 8.12.0
   reflect-metadata: 0.1.14
   rxjs: 7.8.1
   typeorm: 0.3.20_pg@8.12.0+ts-node@10.9.2
-  uuid: 10.0.0
 
 devDependencies:
   '@nestjs/cli': 9.5.0
@@ -2282,6 +2282,11 @@ packages:
 
   /dotenv-expand/10.0.0:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
     dev: false
 
@@ -5164,7 +5169,7 @@ packages:
       cli-highlight: 2.1.11
       dayjs: 1.11.12
       debug: 4.3.6
-      dotenv: 16.4.5
+      dotenv: 16.0.3
       glob: 10.4.5
       mkdirp: 2.1.6
       pg: 8.12.0
@@ -5227,11 +5232,6 @@ packages:
   /utils-merge/1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
-
-  /uuid/10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
-    hasBin: true
-    dev: false
 
   /uuid/9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
