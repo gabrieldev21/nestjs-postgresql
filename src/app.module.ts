@@ -12,7 +12,6 @@ import { ProductModule } from './modules/product/product.module';
     ProductModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.local', '.env.production'],
     }),
     TypeOrmModule.forRootAsync({
       useClass: PostgresConfigService,
