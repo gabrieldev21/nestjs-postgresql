@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { OrderEntity } from './entities/order.entity';
+import { UserEntity } from '../user/entities/user.entity';
+import { StatusOrder } from './entities/status-pedido.enum';
 
 @Injectable()
 export class OrderService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+  constructor(
+    @InjectRepository(OrderEntity)
+    private readonly orderRepository: Repository<OrderEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+
+  async registerOrder(userId: string) {
+    const receivedUser = await this.userRepository.findOneBy({ id: userId });
+    const orderEntity = new OrderEntity();
+
+    orderEntity.totalValue = 0;
+    orderEntity.status = StatusOrder.IN_PROCESSING;
+    orderEntity.user = receivedUser;
+
+    const orderCreated = await this.orderRepository.save(orderEntity);
+    return orderCreated;
   }
 
-  findAll() {
-    return `This action returns all order`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
-  }
-
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async getOrderByUser(userId: string) {
+    const orderCreated = await this.orderRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      relations: {
+        user: true,
+      },
+    });
+    return orderCreated;
   }
 }
