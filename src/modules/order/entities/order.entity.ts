@@ -4,12 +4,14 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { StatusOrder } from './status-pedido.enum';
 import { UserEntity } from '../../user/entities/user.entity';
+import { OrderItemEntity } from './order-item.entity';
 
 @Entity({ name: 'orders' })
 export class OrderEntity {
@@ -33,4 +35,10 @@ export class OrderEntity {
 
   @ManyToOne(() => UserEntity, user => user.order)
   user: UserEntity;
+
+  @OneToMany(() => OrderItemEntity, orderItem => orderItem.order, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  orderItems: OrderItemEntity[];
 }
