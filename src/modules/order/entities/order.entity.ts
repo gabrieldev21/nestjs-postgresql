@@ -37,6 +37,7 @@ export class OrderEntity {
   user: UserEntity;
 
   @OneToMany(() => OrderItemEntity, orderItem => orderItem.order, {
+    cascade: true,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

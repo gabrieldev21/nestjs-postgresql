@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { randomUUID } from 'crypto';
 
 import { UserEntity } from './entities/user.entity';
 import { ListUserDto } from './dto/list-user.dto';
@@ -22,7 +21,6 @@ export class UserService {
 
   async createUser(saveUserDto: SaveUserDto) {
     const userEntity = new UserEntity();
-    userEntity.id = randomUUID();
     userEntity.name = saveUserDto.name;
     userEntity.email = saveUserDto.email;
     userEntity.password = saveUserDto.password;
