@@ -10,14 +10,12 @@ import {
 
 import { ProductImageEntity } from './product-image.entity';
 import { ProductFeatureEntity } from './product-feature.entity';
+import { OrderItemEntity } from 'src/modules/order/entities/order-item.entity';
 
 @Entity({ name: 'products' })
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
-  @Column({ name: 'user_id', length: 100, nullable: false })
-  userId: string;
 
   @Column({ name: 'name', length: 100, nullable: false })
   name: string;
@@ -33,6 +31,15 @@ export class ProductEntity {
 
   @Column({ name: 'category', length: 100, nullable: false })
   category: string;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: string;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: string;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: string;
 
   @OneToMany(
     () => ProductFeatureEntity,
@@ -54,12 +61,6 @@ export class ProductEntity {
   )
   images: ProductImageEntity[];
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: string;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: string;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: string;
+  @OneToMany(() => OrderItemEntity, orderItems => orderItems.product)
+  orderItems: OrderItemEntity[];
 }
