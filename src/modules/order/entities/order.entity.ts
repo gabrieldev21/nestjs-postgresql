@@ -38,8 +38,6 @@ export class OrderEntity {
 
   @OneToMany(() => OrderItemEntity, orderItem => orderItem.order, {
     cascade: true,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
   })
   orderItems: OrderItemEntity[];
 }

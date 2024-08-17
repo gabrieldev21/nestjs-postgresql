@@ -10,7 +10,7 @@ import {
 
 import { ProductImageEntity } from './product-image.entity';
 import { ProductFeatureEntity } from './product-feature.entity';
-import { OrderItemEntity } from 'src/modules/order/entities/order-item.entity';
+import { OrderItemEntity } from '../../order/entities/order-item.entity';
 
 @Entity({ name: 'products' })
 export class ProductEntity {
@@ -42,24 +42,18 @@ export class ProductEntity {
   deletedAt: string;
 
   @OneToMany(
-    () => ProductFeatureEntity,
-    productFeatureEntity => productFeatureEntity.product,
-    {
-      cascade: true,
-      eager: true,
-    },
-  )
-  features: ProductFeatureEntity[];
-
-  @OneToMany(
     () => ProductImageEntity,
     productImageEntity => productImageEntity.product,
-    {
-      cascade: true,
-      eager: true,
-    },
+    { cascade: true, eager: true },
   )
   images: ProductImageEntity[];
+
+  @OneToMany(
+    () => ProductFeatureEntity,
+    productFeatureEntity => productFeatureEntity.product,
+    { cascade: true, eager: true },
+  )
+  features: ProductFeatureEntity[];
 
   @OneToMany(() => OrderItemEntity, orderItems => orderItems.product)
   orderItems: OrderItemEntity[];
