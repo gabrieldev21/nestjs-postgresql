@@ -48,14 +48,14 @@ export class ProductService {
     return productList;
   }
 
-  async updateProduct(id: string, newDetails: UpdateProductDto) {
+  async updateProduct(id: string, newData: UpdateProductDto) {
     const existingProduct = await this.productRepository.findOneBy({ id });
 
     if (!existingProduct) {
       throw new NotFoundException('Product not found');
     }
 
-    Object.assign(existingProduct, newDetails);
+    Object.assign(existingProduct, newData);
 
     await this.productRepository.save(existingProduct);
   }
