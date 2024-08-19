@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
@@ -52,10 +52,11 @@ export class ProductService {
     const existingProduct = await this.productRepository.findOneBy({ id });
 
     if (!existingProduct) {
-      throw new Error('Product not found');
+      throw new NotFoundException('Product not found');
     }
 
     Object.assign(existingProduct, newDetails);
+
     await this.productRepository.save(existingProduct);
   }
 
@@ -65,5 +66,6 @@ export class ProductService {
     if (!deleteResult.affected) {
       throw new Error('Product not found');
     }
+    return deleteResult;
   }
 }

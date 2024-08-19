@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
@@ -21,24 +21,40 @@ export class OrderService {
     private readonly productRepository: Repository<ProductEntity>,
   ) {}
 
+  private async findUser(id: string) {
+    const receivedUser = await this.userRepository.findOneBy({ id });
+
+    if (!receivedUser) {
+      throw new NotFoundException('User not found');
+    }
+    return receivedUser;
+  }
+
   async registerOrder(userId: string, orderData: CreateOrderDto) {
-    const receivedUser = await this.userRepository.findOneBy({ id: userId });
+    const receivedUser = await this.findUser(userId);
     const productIds = orderData.orderItems.map(
       orderItem => orderItem.productId,
     );
 
-    const relatedProducts = await this.productRepository.findBy({
-      id: In(productIds),
-    });
     const orderEntity = new OrderEntity();
 
     orderEntity.status = StatusOrder.IN_PROCESSING;
     orderEntity.user = receivedUser;
 
+    const relatedProducts = await this.productRepository.findBy({
+      id: In(productIds),
+    });
     const orderItemsEntity = orderData.orderItems.map(orderItem => {
       const relatedProduct = relatedProducts.find(
         product => product.id === orderItem.productId,
       );
+
+      if (!relatedProduct) {
+        throw new NotFoundException(
+          `Product id ${orderItem.productId} not found`,
+        );
+      }
+
       const orderItemEntity = new OrderItemEntity();
 
       orderItemEntity.product = relatedProduct;
@@ -77,6 +93,10 @@ export class OrderService {
 
   async updateOrder(id: string, orderDto: UpdateOrderDto) {
     const savedOrder = await this.orderRepository.findOneBy({ id });
+
+    if (!savedOrder) {
+      throw new NotFoundException('Order not found');
+    }
 
     Object.assign(savedOrder, orderDto);
 
