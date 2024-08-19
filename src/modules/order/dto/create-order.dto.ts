@@ -10,6 +10,7 @@ import {
 class OrderItemDto {
   @IsUUID()
   productId: string;
+
   @IsInt()
   quantity: number;
 }
