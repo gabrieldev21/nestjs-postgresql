@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
@@ -30,24 +35,15 @@ export class OrderService {
     return receivedUser;
   }
 
-  async registerOrder(userId: string, orderData: CreateOrderDto) {
-    const receivedUser = await this.findUser(userId);
-    const productIds = orderData.orderItems.map(
-      orderItem => orderItem.productId,
+  private handlingOrderData(
+    orderData: CreateOrderDto,
+    relatedProducts: ProductEntity[],
+  ): void {
+    const relatedProductMap = new Map(
+      relatedProducts.map(product => [product.id, product]),
     );
-
-    const orderEntity = new OrderEntity();
-
-    orderEntity.status = StatusOrder.IN_PROCESSING;
-    orderEntity.user = receivedUser;
-
-    const relatedProducts = await this.productRepository.findBy({
-      id: In(productIds),
-    });
-    const orderItemsEntity = orderData.orderItems.map(orderItem => {
-      const relatedProduct = relatedProducts.find(
-        product => product.id === orderItem.productId,
-      );
+    orderData.orderItems.forEach(orderItem => {
+      const relatedProduct = relatedProductMap.get(orderItem.productId);
 
       if (!relatedProduct) {
         throw new NotFoundException(
@@ -55,10 +51,37 @@ export class OrderService {
         );
       }
 
-      const orderItemEntity = new OrderItemEntity();
+      if (orderItem.quantity > relatedProduct.availableQuantity) {
+        throw new BadRequestException(
+          `Order item quantity (${orderItem.quantity}) is greater than product quantity available (${relatedProduct.availableQuantity}) for ${relatedProduct.name}`,
+        );
+      }
+    });
+  }
 
-      orderItemEntity.product = relatedProduct;
-      orderItemEntity.sellPrice = relatedProduct.price;
+  async registerOrder(userId: string, orderData: CreateOrderDto) {
+    const receivedUser = await this.findUser(userId);
+    const productIds = orderData.orderItems.map(
+      orderItem => orderItem.productId,
+    );
+    const relatedProducts = await this.productRepository.findBy({
+      id: In(productIds),
+    });
+
+    this.handlingOrderData(orderData, relatedProducts);
+
+    const orderEntity = new OrderEntity();
+    orderEntity.status = StatusOrder.IN_PROCESSING;
+    orderEntity.user = receivedUser;
+
+    const orderItemsEntity = orderData.orderItems.map(orderItem => {
+      const relatedProduct = relatedProducts.find(
+        product => product.id === orderItem.productId,
+      );
+
+      const orderItemEntity = new OrderItemEntity();
+      orderItemEntity.product = relatedProduct!;
+      orderItemEntity.sellPrice = relatedProduct!.price;
       orderItemEntity.quantity = orderItem.quantity;
       orderItemEntity.product.availableQuantity -= orderItem.quantity;
 
@@ -70,10 +93,10 @@ export class OrderService {
     }, 0);
 
     orderEntity.orderItems = orderItemsEntity;
-
     orderEntity.totalValue = totalValue;
 
     const orderCreated = await this.orderRepository.save(orderEntity);
+
     return orderCreated;
   }
 
