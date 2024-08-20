@@ -7,8 +7,8 @@ import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
-  @Post()
-  create(@Body() createAuthenticationDto: CreateAuthenticationDto) {
-    return this.authenticationService.create(createAuthenticationDto);
+  @Post('login')
+  create(@Body() { email, password }: CreateAuthenticationDto) {
+    return this.authenticationService.login(email, password);
   }
 }
