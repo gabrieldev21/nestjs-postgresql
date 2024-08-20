@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@nestjs/cache-manager': 2.0.1
   '@nestjs/cli': ^10.4.4
   '@nestjs/common': ^10.4.1
   '@nestjs/config': ^3.2.3
@@ -17,6 +18,7 @@ specifiers:
   '@types/uuid': ^10.0.0
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
+  cache-manager: 5.2.3
   class-transformer: ^0.5.1
   class-validator: ^0.14.1
   dotenv: 16.0.3
@@ -39,12 +41,14 @@ specifiers:
   webpack: ^5.0.0
 
 dependencies:
+  '@nestjs/cache-manager': 2.0.1_cpmlsew7epp6rxgsw6nz2hjj5m
   '@nestjs/common': 10.4.1_prqteaxeztlh7hcpcoxjb3p2le
   '@nestjs/config': 3.2.3_4dhrf65t2cl3lwnkgyxpwkcmkq
   '@nestjs/core': 10.4.1_ztjtxepc377s4ne5gkeckdkzcy
   '@nestjs/mapped-types': 2.0.5_yhrizrnbk2xrer2cp2bak7conm
   '@nestjs/platform-express': 10.4.1_4ortadork4advkvxue5nriyhly
   '@nestjs/typeorm': 10.0.2_wifkvu7xkxw6cbq7px2fulnqf4
+  cache-manager: 5.2.3
   class-transformer: 0.5.1
   class-validator: 0.14.1
   dotenv: 16.0.3
@@ -862,6 +866,22 @@ packages:
   /@lukeed/csprng/1.1.0:
     resolution: {integrity: sha512-Z7C/xXCiGWsg0KuKsHTKJxbWhpI3Vs5GwLfOean7MGyVFGqdRgBbAjOCh6u4bbjPc/8MJ2pZmK/0DLdCbivLDA==}
     engines: {node: '>=8'}
+
+  /@nestjs/cache-manager/2.0.1_cpmlsew7epp6rxgsw6nz2hjj5m:
+    resolution: {integrity: sha512-UxDeuarskoSPVzLRl6SVNaUlGnwclhq48JCvQ/zu7W2RRaBqlxzfM8/CaRjrpSwC7/LVrLKv+f9EoAWYOvSULg==}
+    peerDependencies:
+      '@nestjs/common': ^9.0.0 || ^10.0.0
+      '@nestjs/core': ^9.0.0 || ^10.0.0
+      cache-manager: <=5
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.0.0
+    dependencies:
+      '@nestjs/common': 10.4.1_prqteaxeztlh7hcpcoxjb3p2le
+      '@nestjs/core': 10.4.1_ztjtxepc377s4ne5gkeckdkzcy
+      cache-manager: 5.2.3
+      reflect-metadata: 0.1.14
+      rxjs: 7.8.1
+    dev: false
 
   /@nestjs/cli/10.4.4:
     resolution: {integrity: sha512-WKERbSZJGof0+9XeeMmWnb/9FpNxogcB5eTJTHjc9no0ymdTw3jTzT+KZL9iC/hGqBpuomDLaNFCYbAOt29nBw==}
@@ -1924,6 +1944,13 @@ packages:
   /bytes/3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
+
+  /cache-manager/5.2.3:
+    resolution: {integrity: sha512-9OErI8fksFkxAMJ8Mco0aiZSdphyd90HcKiOMJQncSlU1yq/9lHHxrT8PDayxrmr9IIIZPOAEfXuGSD7g29uog==}
+    dependencies:
+      lodash.clonedeep: 4.5.0
+      lru-cache: 9.1.2
+    dev: false
 
   /call-bind/1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
@@ -3806,6 +3833,10 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.clonedeep/4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
+
   /lodash.memoize/4.1.2:
     resolution: {integrity: sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==}
     dev: true
@@ -3833,6 +3864,11 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
+
+  /lru-cache/9.1.2:
+    resolution: {integrity: sha512-ERJq3FOzJTxBbFjZ7iDs+NiK4VI9Wz+RdrrAB8dio1oV+YvdPzUEE4QNiT2VD51DkIbCYRUUzCRkssXCHqSnKQ==}
+    engines: {node: 14 || >=16.14}
+    dev: false
 
   /magic-string/0.30.8:
     resolution: {integrity: sha512-ISQTe55T2ao7XtlAStud6qwYPZjE4GK1S/BeVPus4jrq6JuOnQ00YKQC581RWhR122W7msZV263KzVeLoqidyQ==}
