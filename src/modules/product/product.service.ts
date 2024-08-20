@@ -14,6 +14,17 @@ export class ProductService {
     private readonly productRepository: Repository<ProductEntity>,
   ) {}
 
+  private listProductDto(product: ProductEntity) {
+    const listProduct = new ListProductDto(
+      product.id,
+      product.name,
+      product.features,
+      product.images,
+    );
+
+    return listProduct;
+  }
+
   async createProduct(productData: CreateProductDto) {
     const product = new ProductEntity();
 
@@ -30,16 +41,25 @@ export class ProductService {
       },
     });
 
-    const productList = savedProducts.map(
-      product =>
-        new ListProductDto(
-          product.id,
-          product.name,
-          product.features,
-          product.images,
-        ),
+    const productList = savedProducts.map(product =>
+      this.listProductDto(product),
     );
     return productList;
+  }
+
+  async listById(id: string) {
+    const savedProduct = await this.productRepository.findOne({
+      where: { id },
+      relations: {
+        images: true,
+        features: true,
+      },
+    });
+
+    if (!savedProduct) {
+      throw new NotFoundException(`Product id ${id} not found`);
+    }
+    return this.listProductDto(savedProduct);
   }
 
   async updateProduct(id: string, newData: UpdateProductDto) {
