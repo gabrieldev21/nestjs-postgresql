@@ -22,7 +22,10 @@ export class ExceptionFilterGlobal implements ExceptionFilter {
 
     const { status, body } =
       exception instanceof HttpException
-        ? { status: exception.getStatus(), body: exception.getResponse }
+        ? {
+            status: exception.getStatus(),
+            body: exception.getResponse(),
+          }
         : {
             status: HttpStatus.INTERNAL_SERVER_ERROR,
             body: {

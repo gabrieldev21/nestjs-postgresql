@@ -7,7 +7,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
 import { UserModule } from './modules/user/user.module';
 import { ProductModule } from './modules/product/product.module';
 import { OrderModule } from './modules/order/order.module';
-import { ExceptionFilterGlobal } from './utils/filter/exception-filter-global';
+import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global';
 
 @Module({
   imports: [
