@@ -17,13 +17,7 @@ export class ProductService {
   async createProduct(productData: CreateProductDto) {
     const product = new ProductEntity();
 
-    product.name = productData.name;
-    product.price = productData.price;
-    product.availableQuantity = productData.availableQuantity;
-    product.description = productData.description;
-    product.category = productData.category;
-    product.features = productData.features;
-    product.images = productData.images;
+    Object.assign(product, productData as ProductEntity);
 
     await this.productRepository.save(product);
   }
@@ -55,7 +49,7 @@ export class ProductService {
       throw new NotFoundException('Product not found');
     }
 
-    Object.assign(existingProduct, newData);
+    Object.assign(existingProduct, newData as ProductEntity);
 
     await this.productRepository.save(existingProduct);
   }
