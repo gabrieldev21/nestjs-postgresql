@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
@@ -6,6 +7,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
 import { UserModule } from './modules/user/user.module';
 import { ProductModule } from './modules/product/product.module';
 import { OrderModule } from './modules/order/order.module';
+import { ExceptionFilterGlobal } from './utils/filter/exception-filter-global';
 
 @Module({
   imports: [
@@ -19,6 +21,12 @@ import { OrderModule } from './modules/order/order.module';
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
     }),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: ExceptionFilterGlobal,
+    },
   ],
 })
 export class AppModule {}
