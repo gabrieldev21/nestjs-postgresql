@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CacheModule } from '@nestjs/cache-manager';
 
 import { PostgresConfigService } from './config/postgres.config.service';
 import { UserModule } from './modules/user/user.module';
@@ -21,6 +22,7 @@ import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global
       useClass: PostgresConfigService,
       inject: [PostgresConfigService],
     }),
+    CacheModule.register({ isGlobal: true, ttl: 10000 }),
   ],
   providers: [
     {

@@ -6,7 +6,9 @@ import {
   Param,
   Post,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -28,6 +30,7 @@ export class ProductController {
   }
 
   @Get(':id')
+  @UseInterceptors(CacheInterceptor)
   async listById(@Param('id') id: string) {
     return await this.productService.listById(id);
   }
