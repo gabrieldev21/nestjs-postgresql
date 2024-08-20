@@ -9,6 +9,7 @@ import { PostgresConfigService } from './config/postgres.config.service';
 import { UserModule } from './modules/user/user.module';
 import { ProductModule } from './modules/product/product.module';
 import { OrderModule } from './modules/order/order.module';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global';
 
 @Module({
@@ -16,6 +17,7 @@ import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global
     UserModule,
     ProductModule,
     OrderModule,
+    AuthenticationModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
