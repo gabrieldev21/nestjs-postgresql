@@ -1,18 +1,5 @@
-import { IsNotEmpty, IsEmail, MinLength, IsOptional } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
-import { IsEmailUnique } from 'src/utils/validator/isEmailUnique.validator';
+import { SaveUserDto } from './save-user.dto';
 
-export class UpdateUserDto {
-  @IsNotEmpty()
-  @IsOptional()
-  name: string;
-
-  @IsEmail()
-  @IsEmailUnique({ message: 'Já existe usuário com este email' })
-  @IsOptional()
-  email: string;
-
-  @MinLength(6)
-  @IsOptional()
-  password: string;
-}
+export class UpdateUserDto extends PartialType(SaveUserDto) {}
