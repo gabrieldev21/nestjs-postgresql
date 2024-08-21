@@ -5,7 +5,7 @@ import {
   Param,
   Patch,
   Post,
-  Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 
@@ -13,6 +13,7 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { RequestWithUser } from '../authentication/types/request-with-user';
 
 @UseGuards(AuthenticationGuard)
 @Controller('order')
@@ -21,9 +22,10 @@ export class OrderController {
 
   @Post()
   async registerOrder(
-    @Query('userId') userId: string,
+    @Req() req: RequestWithUser,
     @Body() orderData: CreateOrderDto,
   ) {
+    const userId = req.user.sub;
     const orderCreated = await this.orderService.registerOrder(
       userId,
       orderData,
@@ -32,15 +34,18 @@ export class OrderController {
   }
 
   @Get()
-  getOrderByUser(@Query('userId') userId: string) {
+  getOrderByUser(@Req() req: RequestWithUser) {
+    const userId = req.user.sub;
     return this.orderService.getOrderByUser(userId);
   }
 
   @Patch(':id')
   updateOrder(
+    @Req() req: RequestWithUser,
     @Param('id') orderId: string,
     @Body() orderAtUpdate: UpdateOrderDto,
   ) {
-    return this.orderService.updateOrder(orderId, orderAtUpdate);
+    const userId = req.user.sub;
+    return this.orderService.updateOrder(orderId, orderAtUpdate, userId);
   }
 }
