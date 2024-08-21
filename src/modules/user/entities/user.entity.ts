@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import { OrderEntity } from '../../order/entities/order.entity';
 
@@ -21,6 +22,7 @@ export class UserEntity {
   @Column({ name: 'email', length: 70, nullable: false })
   email: string;
 
+  @Exclude()
   @Column({ name: 'password', length: 255, nullable: false })
   password: string;
 

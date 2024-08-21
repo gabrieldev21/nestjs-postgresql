@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
@@ -36,6 +36,10 @@ import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global
     {
       provide: APP_FILTER,
       useClass: ExceptionFilterGlobal,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
     },
   ],
 })
