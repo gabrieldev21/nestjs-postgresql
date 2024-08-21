@@ -15,6 +15,7 @@ import { ProductModule } from './modules/product/product.module';
 import { OrderModule } from './modules/order/order.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global';
+import { GlobalLoggerInterceptor } from './utils/interceptors/global-logger.interceptor';
 
 @Module({
   imports: [
@@ -44,6 +45,10 @@ import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: GlobalLoggerInterceptor,
     },
     ConsoleLogger,
   ],
