@@ -23,6 +23,12 @@ export class ExceptionFilterGlobal implements ExceptionFilter {
     const context = host.switchToHttp();
     const response = context.getResponse();
     const request = context.getRequest();
+    const user = 'user';
+
+    if (user in request) {
+      this.nativeLogger.log(`Accessed route by user ${request.user.sub}`);
+    }
+
     const { status, body } =
       exception instanceof HttpException
         ? {
