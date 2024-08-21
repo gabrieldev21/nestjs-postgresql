@@ -1,6 +1,7 @@
 import {
   ArgumentsHost,
   Catch,
+  ConsoleLogger,
   ExceptionFilter,
   HttpException,
   HttpStatus,
@@ -9,17 +10,19 @@ import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()
 export class ExceptionFilterGlobal implements ExceptionFilter {
-  constructor(private readonly adapterHost: HttpAdapterHost) {}
+  constructor(
+    private readonly adapterHost: HttpAdapterHost,
+    private readonly nativeLogger: ConsoleLogger,
+  ) {}
 
   catch(exception: unknown, host: ArgumentsHost) {
-    console.log(exception);
+    this.nativeLogger.error(exception);
+    console.error(exception);
 
     const { httpAdapter } = this.adapterHost;
-
     const context = host.switchToHttp();
     const response = context.getResponse();
     const request = context.getRequest();
-
     const { status, body } =
       exception instanceof HttpException
         ? {

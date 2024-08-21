@@ -1,4 +1,8 @@
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  ConsoleLogger,
+  Module,
+} from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -41,6 +45,7 @@ import { ExceptionFilterGlobal } from './utils/exception/exception-filter-global
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
     },
+    ConsoleLogger,
   ],
 })
 export class AppModule {}
